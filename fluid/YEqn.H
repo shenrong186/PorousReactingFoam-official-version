@@ -25,12 +25,18 @@ tmp<fv::convectionScheme<scalar>> mvConvection
  //    Info<< "Debug4" << endl;
             fvScalarMatrix YiEqn
             (
+              porsity*
+              (
                 fvm::ddt(rho, Yi)
               + mvConvection->fvmDiv(phi, Yi)
               - fvm::laplacian(turb.muEff(), Yi)
+               )
              ==
+               porsity*
+              (
                 reaction.R(Yi)
               + fvOptions(rho, Yi)
+              )
             );
   //   Info<< "Debug5" << endl;
             YiEqn.relax();
